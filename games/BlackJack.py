@@ -12,13 +12,13 @@ class BlackJack:
 
     def initializeDeck(self, __numDecks__):
         counter = 0
-        
+
         __deckOfCards__ = []
-        
+
         while counter < __numDecks__:
             __deckOfCards__ += self.deckOfCards
             counter += 1
-        
+
         # Randomize the deck
         random.shuffle(__deckOfCards__)
 
@@ -59,7 +59,7 @@ class BlackJack:
         # Burn the first card
         __deck__.pop(0)
         counter = 1
-        
+
         # Now deal the deck for the players.
         while counter <= (len(self.newPlayerOrder) * 2):
             currentPlayer = self.newPlayerOrder[0]
@@ -77,7 +77,7 @@ class BlackJack:
             __playerDefinition__[item] = {}
             __playerDefinition__[item]["Cards"] = []
             __playerDefinition__[item]["valueOfCards"] = 0
-        
+
         return __playerDefinition__
 
     def printPlayerCards(self):
@@ -135,7 +135,7 @@ class BlackJack:
 
     def printNumberOfPlayers(self):
         print("Print number of players: ", self.numberOfPlayers)
-    
+
     def printNumberOfDecks(self):
         print("Print number of Decks: ", self.numberOfDecks)
 
@@ -164,14 +164,14 @@ class BlackJack:
             "playerWins": 0,
             "gamesPlayed": 0
         }
-    
+
     def __init__(self, __numberOfPlayers__, __numberOfDecks__):
         self.setCardValues()
         self.setDeckOfCards()
-        
+
         self.setNumberOfPlayers(__numberOfPlayers__)
         self.setNumberOfDecks(__numberOfDecks__)
-        
+
         self.setInitialStats()
 
         self.playerDefinition = {}

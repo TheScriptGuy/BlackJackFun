@@ -25,7 +25,7 @@ def playGame(__numberOfPlayers,__numberOfDecks):
 
     # Start a game.
     bjGame = BlackJack.BlackJack(__numberOfPlayers,__numberOfDecks)
-    
+
     # Deal the first set of cards to all players.
     bjGame.firstDeal(bjGame.newDeck)
 
@@ -39,7 +39,7 @@ def playGame(__numberOfPlayers,__numberOfDecks):
     # Deal out the dealer.
     bjGame.playerPlays(bjGame.newPlayerOrder[0])
     bjGame.removeCurrentPlayer()
-    
+
     # Calculate the winner from the game played.
     bjGame.calculateTheWinner()
 
@@ -55,11 +55,11 @@ def startGames(__numberOfGames):
         playGame(numberOfPlayers,numberOfDecks)
         __counter += 1
 
-    
+
 if __name__ == "__main__":
 
     startGames(numberOfGames)
-    
+
     if gameStats["dealerWins"] != 0:
         __playerWinRate = gameStats["playerWins"] / gameStats["dealerWins"] * 100
         print("Number of Players: {}, Number of Decks: {}, Number of Games: {}, Player win rate: {:.2f}".format(numberOfPlayers,numberOfDecks,numberOfGames,__playerWinRate))
