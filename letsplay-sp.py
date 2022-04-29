@@ -5,9 +5,7 @@ numberOfPlayers = 5
 numberOfDecks = 5
 numberOfGames = 1000
 
-"""
-DO NOT EDIT BELOW THIS LINE
-"""
+"""DO NOT EDIT BELOW THIS LINE"""
 gameStats = {
     "dealerWins": 0,
     "playerWins": 0,
@@ -57,15 +55,13 @@ def startGames(__numberOfGames):
 
     
 if __name__ == "__main__":
-
+    # Let the games begin
     startGames(numberOfGames)
     
     if gameStats["dealerWins"] != 0:
+        # If the dealer wins isn't 0 (can't divide by zero)
         __playerWinRate = gameStats["playerWins"] / gameStats["dealerWins"] * 100
         print("Number of Players: {}, Number of Decks: {}, Number of Games: {}, Player win rate: {:.2f}".format(numberOfPlayers,numberOfDecks,numberOfGames,__playerWinRate))
     else:
         print("Could not deal")
-
-
-
 

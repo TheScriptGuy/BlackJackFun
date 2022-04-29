@@ -6,11 +6,13 @@
 import random
 
 class BlackJack:
-
+    """The BlackJack class controls all the dynamics of the game."""
     def printDeck(self, __deck__):
+        """Display the contents of the deck"""
         print(__deck__)
 
     def initializeDeck(self, __numDecks__):
+        """Initialize the deck"""
         counter = 0
         
         __deckOfCards__ = []
@@ -25,9 +27,11 @@ class BlackJack:
         return __deckOfCards__
 
     def printPlayerOrder(self, __playerOrder__):
+        """Print the player order."""
         print(__playerOrder__)
 
     def definePlayerOrder(self, __numberOfPlayers__):
+        """Define the player order"""
         playerOrder = []
 
         playerCounter = 0
@@ -42,6 +46,10 @@ class BlackJack:
         return playerOrder
 
     def countValue(self,playerCards):
+        """
+        Count the value of the cards.
+        Can this be improved?
+        """
         __value__ = 0
         for counter,card in enumerate(playerCards):
             if card.startswith("A"):
@@ -55,6 +63,7 @@ class BlackJack:
 
 
     def firstDeal(self, __deck__):
+        """Perform the first deal of all the cards."""
 
         # Burn the first card
         __deck__.pop(0)
@@ -71,6 +80,7 @@ class BlackJack:
             counter += 1
 
     def definePlayers(self):
+        """Define all the players that will participate in the game."""
         __playerDefinition__ = {}
 
         for counter,item in enumerate(self.newPlayerOrder):
@@ -81,25 +91,32 @@ class BlackJack:
         return __playerDefinition__
 
     def printPlayerCards(self):
+        """Print the player cards."""
         print(self.playerDefinition)
 
 
     def removeCurrentPlayer(self):
+        """Remove the current player from the game."""
         self.newPlayerOrder.pop(0)
 
     def statsPlayerWins(self):
+        """Update the statistics to reflect that player won the game"""
         self.stats["playerWins"] += 1
 
     def statsDealerWins(self):
+        """Update the statistics to reflect that dealer won the game"""
         self.stats["dealerWins"] += 1
 
     def statsGamePlayed(self):
+        """Update the number of games."""
         self.stats["gamesPlayed"] += 1
 
     def printStats(self):
+        """Show the statistics."""
         print(self.stats)
 
     def playerPlays(self, __player__):
+        """Player plays the cards based on logic of Black Jack."""
         __valueOfCards__ = self.playerDefinition[__player__]["valueOfCards"]
         while __valueOfCards__ <= 21 and __valueOfCards__ < 17:
             self.playerDefinition[__player__]["Cards"].append(self.newDeck.pop(0))
@@ -107,7 +124,7 @@ class BlackJack:
             __valueOfCards__ = self.playerDefinition[__player__]["valueOfCards"]
 
     def calculateTheWinner(self):
-
+        """Calculate the winner of the game."""
         __dealerValueOfCards__ = self.playerDefinition["D"]["valueOfCards"]
 
         for count, player in enumerate(self.playerDefinition):
@@ -121,9 +138,6 @@ class BlackJack:
                     #print(player + " WINS")
                     self.statsPlayerWins()
 
-                #elif __valueOfCards__ == __dealerValueOfCards__:
-                    #print(player + " - NO WINNER")
-
                 elif __valueOfCards__ < __dealerValueOfCards__:
                     #print(player + " LOSES")
                     self.statsDealerWins()
@@ -131,18 +145,23 @@ class BlackJack:
         self.statsGamePlayed()
 
     def setNumberOfPlayers(self,numberPlayers):
+        """Set the number of players."""
         self.numberOfPlayers = numberPlayers
 
     def printNumberOfPlayers(self):
+        """Print the number of players in the game."""
         print("Print number of players: ", self.numberOfPlayers)
     
     def printNumberOfDecks(self):
+        """Print the number of the decks."""
         print("Print number of Decks: ", self.numberOfDecks)
 
     def setNumberOfDecks(self,numberDecks):
+        """Define the number of decks to be included in the game."""
         self.numberOfDecks = numberDecks
 
     def setCardValues(self):
+        """Define the card values."""
         self.cardValues = {
             "2H": 2, "3H": 3, "4H": 4, "5H": 5, "6H": 6, "7H": 7, "8H": 8, "9H": 9, "JH": 10, "QH": 10, "KH": 10, "AH": 1,
             "2C": 2, "3C": 3, "4C": 4, "5C": 5, "6C": 6, "7C": 7, "8C": 8, "9C": 9, "JC": 10, "QC": 10, "KC": 10, "AC": 1,
@@ -151,6 +170,7 @@ class BlackJack:
         }
 
     def setDeckOfCards(self):
+        """Set the deck of cards that will be played."""
         self.deckOfCards = [
             "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "JH", "QH", "KH", "AH",
             "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "JD", "QD", "KD", "AD",
@@ -159,6 +179,7 @@ class BlackJack:
         ]
 
     def setInitialStats(self):
+        """Set the inital stats for the game."""
         self.stats = {
             "dealerWins": 0,
             "playerWins": 0,
