@@ -27,7 +27,6 @@ class BJ():
         "gamesPlayed": 0
     }
 
-
     def updateStats(self, __gameStats__):
         # update the local gameStats variable with the results of the latest game played.
         self.gameStats["dealerWins"] += __gameStats__["dealerWins"]
@@ -85,10 +84,9 @@ class BJ():
         self.run()
         mGameStats.append(self.gameStats)
 
-
 if __name__ == "__main__":
     # Create a pool of workers
-    with Pool(processes = numberOfProcesses) as pool:
+    with Pool(processes=numberOfProcesses) as pool:
 
         # Arguments for BJ Class
         # numberOfPlayers = random.randint(2,6)

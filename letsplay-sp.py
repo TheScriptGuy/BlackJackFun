@@ -44,7 +44,6 @@ def playGame(__numberOfPlayersg_numberOfDecks):
     # Update the gameStats with the latest results.
     updateStats(bjGame.stats)
 
-
 def startGames(__numberOfGames):
     # This will iterate through all number of games to be played.
 
@@ -52,7 +51,6 @@ def startGames(__numberOfGames):
     while __counter < __numberOfGames:
         playGame(numberOfPlayersgumberOfDecks)
         __counter += 1
-
 
 if __name__ == "__main__":
     # Let the games begin
