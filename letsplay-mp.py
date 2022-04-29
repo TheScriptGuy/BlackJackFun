@@ -40,12 +40,10 @@ class BJ():
         # Deal out all the cards to all the players.
         bjGame.firstDeal(bjGame.newDeck)
 
-
         # Deal out the players
         while len(bjGame.newPlayerOrder) >= 2:
             bjGame.playerPlays(bjGame.newPlayerOrder[0])
             bjGame.removeCurrentPlayer()
-
 
         # Deal out the dealer
         bjGame.playerPlays(bjGame.newPlayerOrder[0])
@@ -56,7 +54,6 @@ class BJ():
 
         # Update the local gameStats variable.
         self.updateStats(bjGame.stats)
-
 
     def startGames(self, __numberOfGames):
         # Iterate through all the games that need to be played.
@@ -110,5 +107,3 @@ if __name__ == "__main__":
     totalPlayerWinRate = totalPlayerWins / totalDealerWins * 100
 
     print(f'Overall player win rate: {totalPlayerWinRate:.3f}')
-
-
