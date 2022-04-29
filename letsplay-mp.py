@@ -11,15 +11,13 @@ upperRangeOfPlayers = 6
 
 numberOfProcesses = 20
 
-"""
-DO NOT EDIT BELOW THIS LINE
-"""
+"""DO NOT EDIT BELOW THIS LINE"""
 manager = Manager()
 mGameStats = manager.list()
 
 
 class BJ():
-    """ Define the BlackJack class """
+    """Define the BlackJack class."""
 
     # Game stats for this particular process.
     gameStats = {
