@@ -131,15 +131,15 @@ class BlackJack:
             if player.startswith("P"):
                 __valueOfCards__ = self.playerDefinition[player]["valueOfCards"]
                 if __valueOfCards__ > 21:
-                    #print(player + " BUST")
+                    # print(player + " BUST")
                     self.statsDealerWins()
 
                 elif __valueOfCards__ > __dealerValueOfCards__ or __dealerValueOfCards__ > 21:
-                    #print(player + " WINS")
+                    # print(player + " WINS")
                     self.statsPlayerWins()
 
                 elif __valueOfCards__ < __dealerValueOfCards__:
-                    #print(player + " LOSES")
+                    # print(player + " LOSES")
                     self.statsDealerWins()
 
         self.statsGamePlayed()
