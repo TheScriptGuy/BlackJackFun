@@ -39,7 +39,7 @@ class BJ():
     def playGame(self, __numberOfPlayers, __numberOfDecks):
         # Play a game of Black Jack
         bjGame = BlackJack.BlackJack(__numberOfPlayers, __numberOfDecks)
-        
+
         # Deal out all the cards to all the players.
         bjGame.firstDeal(bjGame.newDeck)
 
@@ -53,7 +53,7 @@ class BJ():
         # Deal out the dealer
         bjGame.playerPlays(bjGame.newPlayerOrder[0])
         bjGame.removeCurrentPlayer()
-        
+
         # Calculate the winner of the game.
         bjGame.calculateTheWinner()
 
@@ -67,7 +67,7 @@ class BJ():
         while __counter < __numberOfGames:
             self.playGame(self.numberOfPlayers, self.numberOfDecks)
             __counter += 1
-    
+
     def run(self):
         self.startGames(self.numberOfGames)
         if self.gameStats["dealerWins"] != 0:
@@ -75,7 +75,7 @@ class BJ():
             print(f"Process ID: {self.myPID}, Player win rate: {__playerWinRate:.2f}")
         else:
             print("Could not deal")
-    
+
     def __init__(self, __numberOfPlayers, __numberOfDecks, __numberOfGames):
         self.initialized = True
         self.numberOfPlayers = __numberOfPlayers
@@ -87,11 +87,11 @@ class BJ():
         self.run()
         mGameStats.append(self.gameStats)
 
-        
+
 if __name__ == "__main__":
     # Create a pool of workers
     with Pool(processes = numberOfProcesses) as pool:
-        
+
         # Arguments for BJ Class
         # numberOfPlayers = random.randint(2,6)
         # numberOfDecks = random.randint(2,8)
@@ -99,7 +99,7 @@ if __name__ == "__main__":
 
         multiple_results = [pool.apply_async(BJ, (random.randint(2, upperRangeOfPlayers), random.randint(2, upperRangeOfDecks), random.randint(1000, upperRangeOfGames))) for i in range(numberOfProcesses)]
         [res.get(timeout=60) for res in multiple_results]
-    
+
     # Gather all the details and sum all the playerWins, dealerWins, and gamesPlayed
     totalPlayerWins = sum([item["playerWins"] for item in mGameStats])
     totalDealerWins = sum([item["dealerWins"] for item in mGameStats])
@@ -109,7 +109,7 @@ if __name__ == "__main__":
     print('Total Player Wins: {}'.format(totalPlayerWins))
     print('Total Dealer Wins: {}'.format(totalDealerWins))
     print('Total Games Played: {}'.format(totalGamesPlayed))
-    
+
     # Calculate the win rate
     totalPlayerWinRate = totalPlayerWins / totalDealerWins * 100
 
