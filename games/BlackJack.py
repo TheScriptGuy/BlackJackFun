@@ -45,13 +45,13 @@ class BlackJack:
 
         return playerOrder
 
-    def countValue(self,playerCards):
+    def countValue(self, playerCards):
         """
         Count the value of the cards.
         Can this be improved?
         """
         __value__ = 0
-        for counter,card in enumerate(playerCards):
+        for counter, card in enumerate(playerCards):
             if card.startswith("A"):
                 if __value__ + 11 <= 21:
                     __value__ += self.cardValues[card]
@@ -83,7 +83,7 @@ class BlackJack:
         """Define all the players that will participate in the game."""
         __playerDefinition__ = {}
 
-        for counter,item in enumerate(self.newPlayerOrder):
+        for counter, item in enumerate(self.newPlayerOrder):
             __playerDefinition__[item] = {}
             __playerDefinition__[item]["Cards"] = []
             __playerDefinition__[item]["valueOfCards"] = 0
@@ -144,7 +144,7 @@ class BlackJack:
 
         self.statsGamePlayed()
 
-    def setNumberOfPlayers(self,numberPlayers):
+    def setNumberOfPlayers(self, numberPlayers):
         """Set the number of players."""
         self.numberOfPlayers = numberPlayers
 
@@ -156,7 +156,7 @@ class BlackJack:
         """Print the number of the decks."""
         print("Print number of Decks: ", self.numberOfDecks)
 
-    def setNumberOfDecks(self,numberDecks):
+    def setNumberOfDecks(self, numberDecks):
         """Define the number of decks to be included in the game."""
         self.numberOfDecks = numberDecks
 

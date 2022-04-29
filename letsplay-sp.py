@@ -18,11 +18,11 @@ def updateStats(__gameStats__):
     gameStats["playerWins"] += __gameStats__["playerWins"]
     gameStats["gamesPlayed"] += __gameStats__["gamesPlayed"]
 
-def playGame(__numberOfPlayers,__numberOfDecks):
+def playGame(__numberOfPlayersg_numberOfDecks):
     # This subroutine will play a game of Black Jack
 
     # Start a game.
-    bjGame = BlackJack.BlackJack(__numberOfPlayers,__numberOfDecks)
+    bjGame = BlackJack.BlackJack(__numberOfPlayersg_numberOfDecks)
     
     # Deal the first set of cards to all players.
     bjGame.firstDeal(bjGame.newDeck)
@@ -50,7 +50,7 @@ def startGames(__numberOfGames):
 
     __counter = 0
     while __counter < __numberOfGames:
-        playGame(numberOfPlayers,numberOfDecks)
+        playGame(numberOfPlayersgumberOfDecks)
         __counter += 1
 
     
@@ -61,7 +61,7 @@ if __name__ == "__main__":
     if gameStats["dealerWins"] != 0:
         # If the dealer wins isn't 0 (can't divide by zero)
         __playerWinRate = gameStats["playerWins"] / gameStats["dealerWins"] * 100
-        print("Number of Players: {}, Number of Decks: {}, Number of Games: {}, Player win rate: {:.2f}".format(numberOfPlayers,numberOfDecks,numberOfGames,__playerWinRate))
+        print("Number of Players: {}, Number of Decks: {}, Number of Games: {}, Player win rate: {:.2f}".format(numberOfPlayersgumberOfDecks, numberOfGames, __playerWinRate))
     else:
         print("Could not deal")
 

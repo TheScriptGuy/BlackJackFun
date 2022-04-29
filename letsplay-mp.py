@@ -30,15 +30,15 @@ class BJ():
     }
 
 
-    def updateStats(self,__gameStats__):
+    def updateStats(self, __gameStats__):
         # update the local gameStats variable with the results of the latest game played.
         self.gameStats["dealerWins"] += __gameStats__["dealerWins"]
         self.gameStats["playerWins"] += __gameStats__["playerWins"]
         self.gameStats["gamesPlayed"] += __gameStats__["gamesPlayed"]
 
-    def playGame(self,__numberOfPlayers,__numberOfDecks):
+    def playGame(self, __numberOfPlayers, __numberOfDecks):
         # Play a game of Black Jack
-        bjGame = BlackJack.BlackJack(__numberOfPlayers,__numberOfDecks)
+        bjGame = BlackJack.BlackJack(__numberOfPlayers, __numberOfDecks)
         
         # Deal out all the cards to all the players.
         bjGame.firstDeal(bjGame.newDeck)
@@ -61,11 +61,11 @@ class BJ():
         self.updateStats(bjGame.stats)
 
 
-    def startGames(self,__numberOfGames):
+    def startGames(self, __numberOfGames):
         # Iterate through all the games that need to be played.
         __counter = 0
         while __counter < __numberOfGames:
-            self.playGame(self.numberOfPlayers,self.numberOfDecks)
+            self.playGame(self.numberOfPlayers, self.numberOfDecks)
             __counter += 1
     
     def run(self):
@@ -76,7 +76,7 @@ class BJ():
         else:
             print("Could not deal")
     
-    def __init__(self,__numberOfPlayers,__numberOfDecks,__numberOfGames):
+    def __init__(self, __numberOfPlayers, __numberOfDecks, __numberOfGames):
         self.initialized = True
         self.numberOfPlayers = __numberOfPlayers
         self.numberOfDecks = __numberOfDecks
@@ -97,7 +97,7 @@ if __name__ == "__main__":
         # numberOfDecks = random.randint(2,8)
         # numberOfGames = random.randint(1000,10000)
 
-        multiple_results = [pool.apply_async(BJ, (random.randint(2,upperRangeOfPlayers),random.randint(2,upperRangeOfDecks),random.randint(1000,upperRangeOfGames))) for i in range(numberOfProcesses)]
+        multiple_results = [pool.apply_async(BJ, (random.randint(2, upperRangeOfPlayers), random.randint(2, upperRangeOfDecks), random.randint(1000, upperRangeOfGames))) for i in range(numberOfProcesses)]
         [res.get(timeout=60) for res in multiple_results]
     
     # Gather all the details and sum all the playerWins, dealerWins, and gamesPlayed
