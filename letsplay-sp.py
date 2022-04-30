@@ -18,6 +18,7 @@ def updateStats(__gameStats__):
     gameStats["playerWins"] += __gameStats__["playerWins"]
     gameStats["gamesPlayed"] += __gameStats__["gamesPlayed"]
 
+
 def playGame(__numberOfPlayersg_numberOfDecks):
     # This subroutine will play a game of Black Jack
 
@@ -27,12 +28,10 @@ def playGame(__numberOfPlayersg_numberOfDecks):
     # Deal the first set of cards to all players.
     bjGame.firstDeal(bjGame.newDeck)
 
-
     # Deal out the players.
     while len(bjGame.newPlayerOrder) >= 2:
         bjGame.playerPlays(bjGame.newPlayerOrder[0])
         bjGame.removeCurrentPlayer()
-
 
     # Deal out the dealer.
     bjGame.playerPlays(bjGame.newPlayerOrder[0])
@@ -44,6 +43,7 @@ def playGame(__numberOfPlayersg_numberOfDecks):
     # Update the gameStats with the latest results.
     updateStats(bjGame.stats)
 
+
 def startGames(__numberOfGames):
     # This will iterate through all number of games to be played.
 
@@ -51,6 +51,7 @@ def startGames(__numberOfGames):
     while __counter < __numberOfGames:
         playGame(numberOfPlayersgumberOfDecks)
         __counter += 1
+
 
 if __name__ == "__main__":
     # Let the games begin

@@ -81,6 +81,7 @@ class BJ():
         self.run()
         mGameStats.append(self.gameStats)
 
+
 if __name__ == "__main__":
     # Create a pool of workers
     with Pool(processes=numberOfProcesses) as pool:
