@@ -8,6 +8,7 @@ import random
 
 class BlackJack:
     """The BlackJack class controls all the dynamics of the game."""
+
     def printDeck(self, __deck__):
         """Display the contents of the deck"""
         print(__deck__)
