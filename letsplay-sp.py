@@ -45,7 +45,7 @@ def startGames(__numberOfGames):
     """This will iterate through all number of games to be played."""
     __counter = 0
     while __counter < __numberOfGames:
-        playGame(numberOfPlayers,numberOfDecks)
+        playGame(numberOfPlayers, numberOfDecks)
         __counter += 1
 
 if __name__ == "__main__":
@@ -55,7 +55,7 @@ if __name__ == "__main__":
     if gameStats["dealerWins"] != 0:
         # If the dealer wins isn't 0 (can't divide by zero)
         __playerWinRate = gameStats["playerWins"] / gameStats["dealerWins"] * 100
-        print("Number of Players: {}, Number of Decks: {}, Number of Games: {}, Player win rate: {:.2f}".format(numberOfPlayers,numberOfDecks, numberOfGames, __playerWinRate))
+        print("Number of Players: {}, Number of Decks: {}, Number of Games: {}, Player win rate: {:.2f}".format(numberOfPlayers, numberOfDecks, numberOfGames, __playerWinRate))
     else:
         print("Could not deal")
 
