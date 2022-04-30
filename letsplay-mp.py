@@ -4,7 +4,6 @@ from multiprocessing import Process, Pool, Value, Manager, TimeoutError
 import os
 import random
 
-
 upperRangeOfGames = 100000
 upperRangeOfDecks = 8
 upperRangeOfPlayers = 6
@@ -28,13 +27,13 @@ class BJ():
     }
 
     def updateStats(self, __gameStats__):
-        # update the local gameStats variable with the results of the latest game played.
+        """Update the local gameStats variable with the results of the latest game played."""
         self.gameStats["dealerWins"] += __gameStats__["dealerWins"]
         self.gameStats["playerWins"] += __gameStats__["playerWins"]
         self.gameStats["gamesPlayed"] += __gameStats__["gamesPlayed"]
 
     def playGame(self, __numberOfPlayers, __numberOfDecks):
-        # Play a game of Black Jack
+        """Play a game of Black Jack."""
         bjGame = BlackJack.BlackJack(__numberOfPlayers, __numberOfDecks)
 
         # Deal out all the cards to all the players.
@@ -56,13 +55,14 @@ class BJ():
         self.updateStats(bjGame.stats)
 
     def startGames(self, __numberOfGames):
-        # Iterate through all the games that need to be played.
+        """Iterate through all the games that need to be played."""
         __counter = 0
         while __counter < __numberOfGames:
             self.playGame(self.numberOfPlayers, self.numberOfDecks)
             __counter += 1
 
     def run(self):
+        """Start the game."""
         self.startGames(self.numberOfGames)
         if self.gameStats["dealerWins"] != 0:
             __playerWinRate = self.gameStats["playerWins"] / self.gameStats["dealerWins"] * 100
@@ -71,6 +71,7 @@ class BJ():
             print("Could not deal")
 
     def __init__(self, __numberOfPlayers, __numberOfDecks, __numberOfGames):
+        """Initialize the class."""
         self.initialized = True
         self.numberOfPlayers = __numberOfPlayers
         self.numberOfDecks = __numberOfDecks
