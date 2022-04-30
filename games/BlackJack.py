@@ -5,6 +5,7 @@
 
 import random
 
+
 class BlackJack:
     """The BlackJack class controls all the dynamics of the game."""
 
@@ -93,7 +94,6 @@ class BlackJack:
     def printPlayerCards(self):
         """Print the player cards."""
         print(self.playerDefinition)
-
 
     def removeCurrentPlayer(self):
         """Remove the current player from the game."""
@@ -187,6 +187,7 @@ class BlackJack:
         }
 
     def __init__(self, __numberOfPlayers__, __numberOfDecks__):
+        """Initialize the class."""
         self.setCardValues()
         self.setDeckOfCards()
 
