@@ -52,7 +52,7 @@ class BlackJack:
         Can this be improved?
         """
         __value__ = 0
-        for counter, card in enumerate(playerCards):
+        for card in playerCards:
             if card.startswith("A"):
                 if __value__ + 11 <= 21:
                     __value__ += self.cardValues[card]
@@ -82,7 +82,7 @@ class BlackJack:
         """Define all the players that will participate in the game."""
         __playerDefinition__ = {}
 
-        for counter, item in enumerate(self.newPlayerOrder):
+        for item in self.newPlayerOrder:
             __playerDefinition__[item] = {}
             __playerDefinition__[item]["Cards"] = []
             __playerDefinition__[item]["valueOfCards"] = 0
@@ -125,7 +125,7 @@ class BlackJack:
         """Calculate the winner of the game."""
         __dealerValueOfCards__ = self.playerDefinition["D"]["valueOfCards"]
 
-        for count, player in enumerate(self.playerDefinition):
+        for player in self.playerDefinition:
             if player.startswith("P"):
                 __valueOfCards__ = self.playerDefinition[player]["valueOfCards"]
                 if __valueOfCards__ > 21:
