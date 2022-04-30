@@ -63,7 +63,6 @@ class BlackJack:
                 __value__ += self.cardValues[card]
         return __value__
 
-
     def firstDeal(self, __deck__):
         """Perform the first deal of all the cards."""
         # Burn the first card
