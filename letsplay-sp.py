@@ -18,10 +18,8 @@ def updateStats(__gameStats__):
     gameStats["playerWins"] += __gameStats__["playerWins"]
     gameStats["gamesPlayed"] += __gameStats__["gamesPlayed"]
 
-
 def playGame(__numberOfPlayersg_numberOfDecks):
     """This subroutine will play a game of Black Jack."""
-
     # Start a game.
     bjGame = BlackJack.BlackJack(__numberOfPlayersg_numberOfDecks)
 
@@ -43,15 +41,12 @@ def playGame(__numberOfPlayersg_numberOfDecks):
     # Update the gameStats with the latest results.
     updateStats(bjGame.stats)
 
-
 def startGames(__numberOfGames):
     """This will iterate through all number of games to be played."""
-
     __counter = 0
     while __counter < __numberOfGames:
         playGame(numberOfPlayersgumberOfDecks)
         __counter += 1
-
 
 if __name__ == "__main__":
     # Let the games begin
