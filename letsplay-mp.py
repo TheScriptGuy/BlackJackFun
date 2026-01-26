@@ -21,15 +21,23 @@ class BJ():
     # Game stats for this particular process.
     gameStats = {
         "myPID": os.getpid(),
-        "dealerWins": 0,
-        "playerWins": 0,
+        "handDealerWins": 0,
+        "handPlayerWins": 0,
+        "handPushes": 0,
+        "gameDealerWins": 0,
+        "gamePlayerWins": 0,
+        "gamePushes": 0,
         "gamesPlayed": 0
     }
 
     def updateStats(self, __gameStats__):
         """Update the local gameStats variable with the results of the latest game played."""
-        self.gameStats["dealerWins"] += __gameStats__["dealerWins"]
-        self.gameStats["playerWins"] += __gameStats__["playerWins"]
+        self.gameStats["handDealerWins"] += __gameStats__["handDealerWins"]
+        self.gameStats["handPlayerWins"] += __gameStats__["handPlayerWins"]
+        self.gameStats["handPushes"] += __gameStats__["handPushes"]
+        self.gameStats["gameDealerWins"] += __gameStats__["gameDealerWins"]
+        self.gameStats["gamePlayerWins"] += __gameStats__["gamePlayerWins"]
+        self.gameStats["gamePushes"] += __gameStats__["gamePushes"]
         self.gameStats["gamesPlayed"] += __gameStats__["gamesPlayed"]
 
     def playGame(self, __numberOfPlayers, __numberOfDecks):
@@ -64,11 +72,30 @@ class BJ():
     def run(self):
         """Start the game."""
         self.startGames(self.numberOfGames)
-        if self.gameStats["dealerWins"] != 0:
-            __playerWinRate = self.gameStats["playerWins"] / self.gameStats["dealerWins"] * 100
-            print(f"Process ID: {self.myPID}, Player win rate: {__playerWinRate:.2f}")
-        else:
+        __handDecided = self.gameStats["handPlayerWins"] + self.gameStats["handDealerWins"]
+        __handTotal = __handDecided + self.gameStats["handPushes"]
+        __gameDecided = self.gameStats["gamePlayerWins"] + self.gameStats["gameDealerWins"]
+        __gameTotal = __gameDecided + self.gameStats["gamePushes"]
+
+        if __handTotal == 0 or __gameTotal == 0:
             print("Could not deal")
+            return
+
+        __handWinRateInclusive = self.gameStats["handPlayerWins"] / __handTotal * 100
+        __handLossRateInclusive = self.gameStats["handDealerWins"] / __handTotal * 100
+        __handPushRate = self.gameStats["handPushes"] / __handTotal * 100
+        __handWinRateDecided = self.gameStats["handPlayerWins"] / __handDecided * 100 if __handDecided else 0.0
+
+        __gameWinRateInclusive = self.gameStats["gamePlayerWins"] / __gameTotal * 100
+        __gameLossRateInclusive = self.gameStats["gameDealerWins"] / __gameTotal * 100
+        __gamePushRate = self.gameStats["gamePushes"] / __gameTotal * 100
+        __gameWinRateDecided = self.gameStats["gamePlayerWins"] / __gameDecided * 100 if __gameDecided else 0.0
+
+        print(f"Process ID: {self.myPID}")
+        print("PH inc win {:.2f}% loss {:.2f}% push {:.2f}% | PH decided win {:.2f}%".format(
+            __handWinRateInclusive, __handLossRateInclusive, __handPushRate, __handWinRateDecided))
+        print("PG inc win {:.2f}% loss {:.2f}% push {:.2f}% | PG decided win {:.2f}%".format(
+            __gameWinRateInclusive, __gameLossRateInclusive, __gamePushRate, __gameWinRateDecided))
 
     def __init__(self, __numberOfPlayers, __numberOfDecks, __numberOfGames):
         """Initialize the class."""
@@ -95,17 +122,43 @@ if __name__ == "__main__":
         multiple_results = [pool.apply_async(BJ, (random.randint(2, upperRangeOfPlayers), random.randint(2, upperRangeOfDecks), random.randint(1000, upperRangeOfGames))) for i in range(numberOfProcesses)]
         [res.get(timeout=60) for res in multiple_results]
 
-    # Gather all the details and sum all the playerWins, dealerWins, and gamesPlayed
-    totalPlayerWins = sum([item["playerWins"] for item in mGameStats])
-    totalDealerWins = sum([item["dealerWins"] for item in mGameStats])
+    # Gather all the details and sum all the stats.
+    totalHandPlayerWins = sum([item["handPlayerWins"] for item in mGameStats])
+    totalHandDealerWins = sum([item["handDealerWins"] for item in mGameStats])
+    totalHandPushes = sum([item["handPushes"] for item in mGameStats])
+    totalGamePlayerWins = sum([item["gamePlayerWins"] for item in mGameStats])
+    totalGameDealerWins = sum([item["gameDealerWins"] for item in mGameStats])
+    totalGamePushes = sum([item["gamePushes"] for item in mGameStats])
     totalGamesPlayed = sum([item["gamesPlayed"] for item in mGameStats])
 
     # Display the results.
-    print('Total Player Wins: {}'.format(totalPlayerWins))
-    print('Total Dealer Wins: {}'.format(totalDealerWins))
+    print('Total Hand Player Wins: {}'.format(totalHandPlayerWins))
+    print('Total Hand Dealer Wins: {}'.format(totalHandDealerWins))
+    print('Total Hand Pushes: {}'.format(totalHandPushes))
+    print('Total Game Player Wins: {}'.format(totalGamePlayerWins))
+    print('Total Game Dealer Wins: {}'.format(totalGameDealerWins))
+    print('Total Game Pushes: {}'.format(totalGamePushes))
     print('Total Games Played: {}'.format(totalGamesPlayed))
 
-    # Calculate the win rate
-    totalPlayerWinRate = totalPlayerWins / totalDealerWins * 100
+    totalHandDecided = totalHandPlayerWins + totalHandDealerWins
+    totalHand = totalHandDecided + totalHandPushes
+    totalGameDecided = totalGamePlayerWins + totalGameDealerWins
+    totalGame = totalGameDecided + totalGamePushes
 
-    print(f'Overall player win rate: {totalPlayerWinRate:.3f}')
+    if totalHand == 0 or totalGame == 0:
+        print('Could not deal')
+    else:
+        totalHandWinRateInclusive = totalHandPlayerWins / totalHand * 100
+        totalHandLossRateInclusive = totalHandDealerWins / totalHand * 100
+        totalHandPushRate = totalHandPushes / totalHand * 100
+        totalHandWinRateDecided = totalHandPlayerWins / totalHandDecided * 100 if totalHandDecided else 0.0
+
+        totalGameWinRateInclusive = totalGamePlayerWins / totalGame * 100
+        totalGameLossRateInclusive = totalGameDealerWins / totalGame * 100
+        totalGamePushRate = totalGamePushes / totalGame * 100
+        totalGameWinRateDecided = totalGamePlayerWins / totalGameDecided * 100 if totalGameDecided else 0.0
+
+        print('Overall PH inc win {:.2f}% loss {:.2f}% push {:.2f}% | PH decided win {:.2f}%'.format(
+            totalHandWinRateInclusive, totalHandLossRateInclusive, totalHandPushRate, totalHandWinRateDecided))
+        print('Overall PG inc win {:.2f}% loss {:.2f}% push {:.2f}% | PG decided win {:.2f}%'.format(
+            totalGameWinRateInclusive, totalGameLossRateInclusive, totalGamePushRate, totalGameWinRateDecided))

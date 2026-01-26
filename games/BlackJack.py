@@ -4,6 +4,7 @@
 # Description:     Black Jack Class
 
 import random
+from collections import deque
 
 
 class BlackJack:
@@ -26,7 +27,7 @@ class BlackJack:
         # Randomize the deck
         random.shuffle(__deckOfCards__)
 
-        return __deckOfCards__
+        return deque(__deckOfCards__)
 
     def printPlayerOrder(self, __playerOrder__):
         """Print the player order."""
@@ -34,7 +35,7 @@ class BlackJack:
 
     def definePlayerOrder(self, __numberOfPlayers__):
         """Define the player order"""
-        playerOrder = []
+        playerOrder = deque()
 
         playerCounter = 0
 
@@ -66,16 +67,16 @@ class BlackJack:
     def firstDeal(self, __deck__):
         """Perform the first deal of all the cards."""
         # Burn the first card
-        __deck__.pop(0)
+        __deck__.popleft()
         counter = 1
 
         # Now deal the deck for the players.
         while counter <= (len(self.newPlayerOrder) * 2):
             currentPlayer = self.newPlayerOrder[0]
-            self.playerDefinition[currentPlayer]["Cards"].append(__deck__.pop(0))
+            self.playerDefinition[currentPlayer]["Cards"].append(__deck__.popleft())
             self.playerDefinition[currentPlayer]["valueOfCards"] = self.countValue(self.playerDefinition[currentPlayer]["Cards"])
 
-            self.newPlayerOrder.append(self.newPlayerOrder.pop(0))
+            self.newPlayerOrder.append(self.newPlayerOrder.popleft())
 
             counter += 1
 
@@ -96,15 +97,31 @@ class BlackJack:
 
     def removeCurrentPlayer(self):
         """Remove the current player from the game."""
-        self.newPlayerOrder.pop(0)
+        self.newPlayerOrder.popleft()
 
-    def statsPlayerWins(self):
-        """Update the statistics to reflect that player won the game"""
-        self.stats["playerWins"] += 1
+    def statsHandPlayerWins(self):
+        """Update the statistics to reflect that player won the hand."""
+        self.stats["handPlayerWins"] += 1
 
-    def statsDealerWins(self):
-        """Update the statistics to reflect that dealer won the game"""
-        self.stats["dealerWins"] += 1
+    def statsHandDealerWins(self):
+        """Update the statistics to reflect that dealer won the hand."""
+        self.stats["handDealerWins"] += 1
+
+    def statsHandPushes(self):
+        """Update the statistics to reflect that the hand was a push."""
+        self.stats["handPushes"] += 1
+
+    def statsGamePlayerWins(self):
+        """Update the statistics to reflect that players won the game."""
+        self.stats["gamePlayerWins"] += 1
+
+    def statsGameDealerWins(self):
+        """Update the statistics to reflect that dealer won the game."""
+        self.stats["gameDealerWins"] += 1
+
+    def statsGamePushes(self):
+        """Update the statistics to reflect that the game was a push."""
+        self.stats["gamePushes"] += 1
 
     def statsGamePlayed(self):
         """Update the number of games."""
@@ -118,28 +135,44 @@ class BlackJack:
         """Player plays the cards based on logic of Black Jack."""
         __valueOfCards__ = self.playerDefinition[__player__]["valueOfCards"]
         while __valueOfCards__ <= 21 and __valueOfCards__ < 17:
-            self.playerDefinition[__player__]["Cards"].append(self.newDeck.pop(0))
+            self.playerDefinition[__player__]["Cards"].append(self.newDeck.popleft())
             self.playerDefinition[__player__]["valueOfCards"] = self.countValue(self.playerDefinition[__player__]["Cards"])
             __valueOfCards__ = self.playerDefinition[__player__]["valueOfCards"]
 
     def calculateTheWinner(self):
         """Calculate the winner of the game."""
         __dealerValueOfCards__ = self.playerDefinition["D"]["valueOfCards"]
+        __handPlayerWins__ = 0
+        __handDealerWins__ = 0
 
         for player in self.playerDefinition:
             if player.startswith("P"):
                 __valueOfCards__ = self.playerDefinition[player]["valueOfCards"]
                 if __valueOfCards__ > 21:
                     # print(player + " BUST")
-                    self.statsDealerWins()
+                    self.statsHandDealerWins()
+                    __handDealerWins__ += 1
 
                 elif __valueOfCards__ > __dealerValueOfCards__ or __dealerValueOfCards__ > 21:
                     # print(player + " WINS")
-                    self.statsPlayerWins()
+                    self.statsHandPlayerWins()
+                    __handPlayerWins__ += 1
 
                 elif __valueOfCards__ < __dealerValueOfCards__:
                     # print(player + " LOSES")
-                    self.statsDealerWins()
+                    self.statsHandDealerWins()
+                    __handDealerWins__ += 1
+
+                else:
+                    # print(player + " PUSH")
+                    self.statsHandPushes()
+
+        if __handPlayerWins__ > __handDealerWins__:
+            self.statsGamePlayerWins()
+        elif __handPlayerWins__ < __handDealerWins__:
+            self.statsGameDealerWins()
+        else:
+            self.statsGamePushes()
 
         self.statsGamePlayed()
 
@@ -180,8 +213,12 @@ class BlackJack:
     def setInitialStats(self):
         """Set the inital stats for the game."""
         self.stats = {
-            "dealerWins": 0,
-            "playerWins": 0,
+            "handDealerWins": 0,
+            "handPlayerWins": 0,
+            "handPushes": 0,
+            "gameDealerWins": 0,
+            "gamePlayerWins": 0,
+            "gamePushes": 0,
             "gamesPlayed": 0
         }
 

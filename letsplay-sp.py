@@ -7,15 +7,23 @@ numberOfGames = 1000
 
 """DO NOT EDIT BELOW THIS LINE"""
 gameStats = {
-    "dealerWins": 0,
-    "playerWins": 0,
+    "handDealerWins": 0,
+    "handPlayerWins": 0,
+    "handPushes": 0,
+    "gameDealerWins": 0,
+    "gamePlayerWins": 0,
+    "gamePushes": 0,
     "gamesPlayed": 0
 }
 
 def updateStats(__gameStats__):
     """Update the gameStats variable with the last game results."""
-    gameStats["dealerWins"] += __gameStats__["dealerWins"]
-    gameStats["playerWins"] += __gameStats__["playerWins"]
+    gameStats["handDealerWins"] += __gameStats__["handDealerWins"]
+    gameStats["handPlayerWins"] += __gameStats__["handPlayerWins"]
+    gameStats["handPushes"] += __gameStats__["handPushes"]
+    gameStats["gameDealerWins"] += __gameStats__["gameDealerWins"]
+    gameStats["gamePlayerWins"] += __gameStats__["gamePlayerWins"]
+    gameStats["gamePushes"] += __gameStats__["gamePushes"]
     gameStats["gamesPlayed"] += __gameStats__["gamesPlayed"]
 
 def playGame(__numberOfPlayers, __numberOfDecks):
@@ -52,10 +60,26 @@ if __name__ == "__main__":
     # Let the games begin
     startGames(numberOfGames)
 
-    if gameStats["dealerWins"] != 0:
-        # If the dealer wins isn't 0 (can't divide by zero)
-        __playerWinRate = gameStats["playerWins"] / gameStats["dealerWins"] * 100
-        print("Number of Players: {}, Number of Decks: {}, Number of Games: {}, Player win rate: {:.2f}".format(numberOfPlayers, numberOfDecks, numberOfGames, __playerWinRate))
-    else:
-        print("Could not deal")
+    __handDecided = gameStats["handPlayerWins"] + gameStats["handDealerWins"]
+    __handTotal = __handDecided + gameStats["handPushes"]
+    __gameDecided = gameStats["gamePlayerWins"] + gameStats["gameDealerWins"]
+    __gameTotal = __gameDecided + gameStats["gamePushes"]
 
+    if __handTotal == 0 or __gameTotal == 0:
+        print("Could not deal")
+    else:
+        __handWinRateInclusive = gameStats["handPlayerWins"] / __handTotal * 100
+        __handLossRateInclusive = gameStats["handDealerWins"] / __handTotal * 100
+        __handPushRate = gameStats["handPushes"] / __handTotal * 100
+        __handWinRateDecided = gameStats["handPlayerWins"] / __handDecided * 100 if __handDecided else 0.0
+
+        __gameWinRateInclusive = gameStats["gamePlayerWins"] / __gameTotal * 100
+        __gameLossRateInclusive = gameStats["gameDealerWins"] / __gameTotal * 100
+        __gamePushRate = gameStats["gamePushes"] / __gameTotal * 100
+        __gameWinRateDecided = gameStats["gamePlayerWins"] / __gameDecided * 100 if __gameDecided else 0.0
+
+        print("Number of Players: {}, Number of Decks: {}, Number of Games: {}".format(numberOfPlayers, numberOfDecks, numberOfGames))
+        print("PH inc win {:.2f}% loss {:.2f}% push {:.2f}% | PH decided win {:.2f}%".format(
+            __handWinRateInclusive, __handLossRateInclusive, __handPushRate, __handWinRateDecided))
+        print("PG inc win {:.2f}% loss {:.2f}% push {:.2f}% | PG decided win {:.2f}%".format(
+            __gameWinRateInclusive, __gameLossRateInclusive, __gamePushRate, __gameWinRateDecided))
