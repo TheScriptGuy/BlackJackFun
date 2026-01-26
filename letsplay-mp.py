@@ -4,7 +4,7 @@ from multiprocessing import Process, Pool, Value, Manager, TimeoutError
 import os
 import random
 
-upperRangeOfGames = 100000
+upperRangeOfGames = 1000000
 upperRangeOfDecks = 8
 upperRangeOfPlayers = 6
 
